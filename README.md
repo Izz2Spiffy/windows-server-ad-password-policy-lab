@@ -339,18 +339,18 @@ This launched the **Active Directory Domain Services Configuration Wizard**, whe
 
 ### 🖼️ Screenshot 14 – Creating a New Forest in Active Directory
 
-![Screenshot 14](14-add-new-forest.png.png)
-
 In the **Active Directory Domain Services Configuration Wizard**, I selected:
 
 > ✅ **Add a new forest**
 
 This option is used when you are creating the **very first domain** in a new network environment. In my case, this is for a standalone lab setup, but the same process applies in real production environments.
 
-I then entered my root domain name:
+I then entered my root domain name:  
 > 🔤 **cyberlab.local**
 
 This will become the top-level domain for all users, computers, and group policies in my Active Directory environment.
+
+![Screenshot 14: Creating a New Forest](14-add-new-forest.png.png)
 
 ---
 
@@ -362,240 +362,374 @@ This will become the top-level domain for all users, computers, and group polici
 
 ---
 
-💡 Real-World Example:
+💡 Real-World Example:  
 > A company like “Acme Inc.” may create a forest with the domain **acme.local** or **corp.acme.com** during its initial IT setup. Domain controllers, DNS, and Group Policy will all be based around this root domain name.
 
-📝 Pro Tip:
+📝 Pro Tip:  
 - Domain names for internal use often end in `.local` or use a subdomain like `corp.company.com`  
 - Avoid using actual public domains like `company.com` unless you're integrating with public-facing systems
   
 ---
 
-### 🖼️ Screenshot 15 – Reviewing Deployment Options Before Promotion
+### 🖼️ Screenshot 15 – Reviewing AD DS Configuration Settings
 
-![Screenshot 15](15-review-adds-settings.png.png)
+This screen presents a final summary of all the choices made during the Active Directory Domain Services configuration process. It includes:
 
-Before promoting the server to a domain controller, I reviewed the deployment options including:
+- **Deployment operation:** Add a new forest  
+- **Root domain name:** cyberlab.local  
+- **Forest and domain functional levels:** Windows Server 2022  
+- **Domain Controller capabilities:** DNS, Global Catalog  
+- **Directory Services Restore Mode (DSRM) password:** (not displayed for security)
 
-- Forest and domain functional levels (set to Windows Server 2022 for latest features)  
-- Whether to install DNS Server (checked)  
-- Global Catalog (enabled by default)  
-- Read-only domain controller (not selected since this is the first DC)  
-- DSRM password configuration
+After reviewing all settings and confirming accuracy, I clicked:  
+> ✅ **Next**
 
----
-
-### 🧠 Why This Step Matters:
-
-- Selecting the correct forest and domain functional levels ensures compatibility and feature availability  
-- Installing DNS on the domain controller is necessary since Active Directory depends heavily on DNS  
-- Setting the DSRM password is critical for recovery scenarios when Active Directory repair is needed
-
----
-
-### 🖼️ Screenshot 16 – Prerequisites Check for Domain Controller Promotion
-
-![Screenshot 16](16-prerequisites-check.png.png)
-
-The wizard runs a **prerequisites check** to validate:
-
-- Network connectivity  
-- DNS settings and delegation  
-- Required services and roles installed  
-- No existing conflicting domain controllers or domain names
-
-Upon passing all checks, the promotion process can safely proceed.
+![Screenshot 15: Reviewing AD DS Configuration Settings](15-review-adds-settings.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- Prerequisites check prevents misconfiguration and potential domain-wide issues  
-- Highlights any warnings or errors before changes are made to Active Directory  
-- Emulates real-world IT change control best practices where validations are mandatory
+- Reinforces the habit of **careful review before applying critical system changes**
+- Prevents misconfigurations that would require **a full demotion/reinstallation**
+- Confirms details like functional level and domain name spelling — which can’t be easily changed after deployment
 
 ---
 
-### 🖼️ Screenshot 17 – Server Restart After Domain Controller Promotion
-
-![Screenshot 17](17-server-tools-menu.png.png)
-
-After the promotion completed successfully, the server automatically restarted to apply changes.
-
-This reboot finalizes:
-
-- Domain controller services activation  
-- SYSVOL and Netlogon shares creation  
-- DNS server startup
+📝 Pro Tip:
+- In enterprise environments, this screen is often **captured in change documentation** or attached to approval tickets
+- If something looks wrong here, **stop and go back** — it’s faster than repairing a broken domain setup later
 
 ---
 
-### 🧠 Why This Step Matters:
+### 🖼️ Screenshot 16 – Prerequisites Check for Domain Controller Configuration
 
-- Domain controllers require a reboot to fully initialize and register services  
-- Ensures all changes are properly applied and persistent  
-- After reboot, the server joins the new domain and starts servicing authentication requests
+Before promoting the server to a domain controller, the wizard performs a **prerequisite check** to ensure the system is properly configured.
 
----
+This step automatically verifies:
+- Network configuration
+- Domain name formatting
+- DNS delegation (optional warning)
+- Required ports and services
+- Existing domain conflicts
 
-### 🖼️ Screenshot 18 – Accessing DNS Manager Post-Promotion
+In my case, the check completed successfully with a few warnings (e.g., DNS delegation), which are normal in a lab setup.
 
-![Screenshot 18](18-dns-forward-lookup.png.png)
+Once I reviewed the results, I clicked:  
+> ✅ **Install**
 
-In Server Manager, I opened **DNS Manager** to view **Forward Lookup Zones**.
-
-The zone for my new domain (`cyberlab.local`) was automatically created during promotion.
+![Screenshot 16: Prerequisites Check](16-prerequisites-check.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- DNS zones are essential for domain name resolution within Active Directory  
-- Ensures clients can find domain controllers and other services via DNS  
-- Verifying the zone existence confirms proper AD DNS integration
+- Ensures your domain controller won’t break due to missing configs or bad networking
+- Catches problems like:
+  - Incorrect DNS setup
+  - Invalid domain names
+  - Missing role features
 
 ---
 
-### 🖼️ Screenshot 19 – Navigating to Group Policy Management Editor
+🛠️ Pro Tip:
+- **Warnings ≠ errors** — for example, a “DNS delegation” warning is common in standalone labs and can be safely ignored  
+- In real-world setups, use this screen to capture evidence for **audits or deployment checklists**
 
-![Screenshot 19](19-gpo-password-policy.png.png)
 
-I launched **Group Policy Management Editor** and navigated to:
+---
 
-`cyberlab.local` → **Default Domain Policy** →  
-`Computer Configuration` → `Policies` → `Windows Settings` → `Security Settings` → `Account Policies` → `Password Policy`
+### 🖼️ Screenshot 17 – Accessing Server Tools After AD DS Installation
 
-Here, I reviewed the current password settings.
+After the server rebooted and completed the promotion to domain controller, I returned to **Server Manager** and clicked the **Tools** menu in the top-right corner.
+
+This menu now includes important Active Directory management tools such as:
+- **Active Directory Users and Computers (ADUC)**
+- **Active Directory Domains and Trusts**
+- **Active Directory Sites and Services**
+- **Group Policy Management**
+
+These tools are only available **after the AD DS role has been installed and configured**.
+
+![Screenshot 17: Opening Server Tools Menu](17-server-tools-menu.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- Group Policy manages centralized configuration for all domain-joined computers and users  
-- Password policies enforce security standards to protect user accounts  
-- Editing these policies demonstrates control over enterprise security settings
+- Confirms the **AD DS role was successfully installed and configured**
+- Gives access to essential tools used daily in Active Directory environments
+- Shows you’re ready to start **creating users, groups, and applying Group Policy**
+
+---
+
+📝 Pro Tip:
+- If these tools don’t appear, open **PowerShell as admin** and run:  
+  ```powershell
+  Get-WindowsFeature RSAT*
+
+---
+
+### 🖼️ Screenshot 18 – DNS Manager: Viewing Forward Lookup Zones
+
+Now that the server is a domain controller, it automatically acts as a **DNS server**. I opened **DNS Manager** from the Tools menu and navigated to:
+
+> 📁 **Forward Lookup Zones** ➝ `cyberlab.local`
+
+This zone stores all the DNS records related to my new domain, such as:
+- Host (A) records for the domain controller
+- SRV records used by Active Directory
+- NS and SOA records that define authority
+
+![Screenshot 18: DNS Manager – Forward Lookup Zones](18-dns-forward-lookup.png.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- Active Directory **relies heavily on DNS** to locate domain controllers, services, and other devices  
+- A healthy Forward Lookup Zone is required for **domain join operations, authentication, and Group Policy application**
+- Knowing how to review and troubleshoot DNS zones is a **must-have skill** for any sysadmin or cybersecurity analyst
+
+---
+
+📝 Pro Tip:
+- If clients can’t join the domain or apply GPOs, always check that the **SRV records** exist in the `_msdcs` subfolder  
+- You can also test resolution using:  
+  ```powershell
+  nslookup domaincontroller.cyberlab.local
+
+---
+
+### 🖼️ Screenshot 19 – Navigating to Password Policy in Group Policy Management Editor
+
+In this step, I opened the **Group Policy Management Editor** and navigated to the location where password policies are defined:
+
+> 📂 **Computer Configuration** ➝ **Policies** ➝ **Windows Settings** ➝ **Security Settings** ➝ **Account Policies** ➝ **Password Policy**
+
+This is where administrators configure domain-wide settings like:
+- Minimum password length
+- Maximum password age
+- Password complexity requirements
+
+![Screenshot 19: Group Policy – Password Policy Page](19-gpo-password-policy.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- **Password policies** are a critical part of any organization's security posture  
+- These settings apply to **all domain-joined machines**, ensuring consistent enforcement of security standards  
+- Misconfiguring this can lead to **weakened defenses** or even **domain lockouts** in real-world scenarios
+
+---
+
+🔐 Real-World Example:
+> Companies often require:
+> - Minimum 12–16 characters  
+> - Complexity enabled (upper/lowercase, numbers, symbols)  
+> - Password history and lockout policies  
+> These are typically aligned with frameworks like **NIST**, **CMMC**, or **CIS Benchmarks**.
+
+🛠️ Pro Tip:
+- Changes to password policy **must be made in the Default Domain Policy GPO** to apply across the entire domain  
+- You can enforce these settings immediately using:  
+  ```powershell
+  gpupdate /force
 
 ---
 
 ### 🖼️ Screenshot 20 – Creating a New Group Policy Object (GPO)
 
-![Screenshot 20](20-create-new-gpo.png.png)
+While in the **Group Policy Management Console**, I navigated to:
 
-Within **Group Policy Management Console**, I right-clicked **Group Policy Objects** and selected **New** to create a custom GPO.
+> 🌐 **cyberlab.local** ➝ **Group Policy Objects**  
+> 🖱️ Right-clicked **Group Policy Objects** ➝ Clicked **New**
 
-I named the new GPO:
-> 🔤 **Custom Password Policy**
+This allows me to create a **new, custom GPO** that can later be linked to a specific domain, site, or organizational unit (OU). Custom GPOs are useful when you want to separate policies by function (e.g., password policies, software restrictions, drive mappings).
 
----
-
-### 🧠 Why This Step Matters:
-
-- Creating a separate GPO allows targeted and controlled policy changes  
-- Keeps default domain policies intact for fallback  
-- Enables granular security customization per organizational requirements
-
----
-
-### 🖼️ Screenshot 21 – Confirming Link Enabled on Default Domain Policy
-
-![Screenshot 21](21-name-custom-password-policy.png.png)
-
-Back in Group Policy Management, I confirmed that the **Default Domain Policy** is linked and enabled for `cyberlab.local`.
+![Screenshot 20: Creating New GPO](20-create-new-gpo.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- Ensures that baseline policies are applied domain-wide  
-- Knowing which policies are active is essential for troubleshooting and compliance
+- Helps organize Group Policies into logical, manageable components  
+- Prevents editing the **Default Domain Policy** directly, which is risky in enterprise environments  
+- Encourages **modular design** — easier to audit, troubleshoot, and delegate control
 
 ---
 
-### 🖼️ Screenshot 22 – Editing Maximum Password Age in Custom Password Policy
-
-![Screenshot 22](22-default-domain-policy-linked.png.png)
-
-In the **Custom Password Policy** GPO, I edited the **Maximum password age** setting to:
-
-> 🔢 **60 days**
-
-This setting forces users to change their passwords at least every 60 days.
+📝 Pro Tip:
+- Always **name GPOs clearly**, e.g., `GPO-PasswordPolicy-Secure` or `GPO-DriveMappings-Marketing`
+- After creating the GPO, you'll need to **link it** to a domain or OU for it to take effect
 
 ---
 
-### 🧠 Why This Step Matters:
+### 🖼️ Screenshot 21 – Naming the New Group Policy Object
 
-- Regular password changes reduce the risk of compromised credentials being used long-term  
-- Reflects common corporate security standards  
-- Enforces discipline and compliance through automated policy
+After selecting **New** in the Group Policy Objects section, a pop-up appeared prompting me to name the new GPO.
 
----
+I named it:  
+> 🏷️ **Custom Password Policy**
 
-### 🖼️ Screenshot 23 – Changing Minimum Password Length
+This name clearly identifies the purpose of the policy, helping with organization and troubleshooting in the future.
 
-![Screenshot 23](23-set-max-password-age.png.png)
-
-Next, I set the **Minimum password length** to:
-
-> 🔢 **12 characters**
-
-This increases password complexity requirements to enhance security.
+![Screenshot 21: Naming New GPO](21-name-custom-password-policy.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- Longer passwords exponentially increase resistance against brute-force and guessing attacks  
-- Aligns with cybersecurity best practices and compliance frameworks
+- Using clear, descriptive names for GPOs helps with **administration, delegation, and audits**
+- Naming conventions allow teams to quickly understand a policy's purpose without opening it
+- In enterprise environments, poor naming leads to **confusion, duplicated settings, or accidental overrides**
 
 ---
 
-### 🖼️ Screenshot 24 – Linking Custom Password Policy to Domain
-
-![Screenshot 24](24-set-min-password-length.png.png)
-
-I right-clicked the domain `cyberlab.local` and selected:
-
-> **Link an Existing GPO...**
-
-Then chose the **Custom Password Policy** GPO to link it.
+📝 Pro Tip:
+- Use a naming format like `GPO-[Purpose]-[Scope/OU]` for clarity — e.g., `GPO-PasswordPolicy-Domain`, `GPO-LockScreen-FinanceOU`
+- Avoid naming GPOs things like "New Policy 1" — it creates headaches later on
 
 ---
 
-### 🧠 Why This Step Matters:
+### 🖼️ Screenshot 22 – Verifying Default Domain Policy Link Status
 
-- Linking the GPO activates the custom password policy for all objects in the domain  
-- Enables centralized management of security configurations
+While still in **Group Policy Management**, I reviewed the list of Group Policy Objects under the **cyberlab.local** domain.
 
----
+I observed that the **Default Domain Policy** has:
+> ✅ **Link Enabled: Yes**
 
-### 🖼️ Screenshot 25 – Creating a New User in Active Directory
+This confirms that the Default Domain Policy is actively applied to all domain-joined machines.
 
-![Screenshot 25](25-link-existing-gpo.png.png)
-
-Using **Active Directory Users and Computers**, I added a new user:
-
-- Name: **Luz Cortez**  
-- Domain: `cyberlab.local`
+![Screenshot 22: Default Domain Policy Linked](22-default-domain-policy-linked.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- Demonstrates basic user management within Active Directory  
-- Creates accounts that will be subject to domain policies, such as password rules
+- The Default Domain Policy is where **domain-wide settings** (like password policies, account lockouts, Kerberos settings) are usually configured  
+- If the link were disabled, **critical security settings might not be enforced**, even if they were configured correctly in the GPO  
+- This step is part of **verifying GPO health and linkage** — a must-know for entry-level sysadmins and cybersecurity analysts
 
 ---
 
-### 🖼️ Screenshot 26 – Setting a Password That Fails Policy
+🛠️ Pro Tip:
+- You can disable a GPO link to temporarily stop applying it *without deleting the GPO itself* — useful for testing or troubleshooting  
+- Use the **"Group Policy Results Wizard"** to simulate and verify which policies are applied to a user or computer
 
-![Screenshot 26](26-select-custom-password-policy.png.png)
+---
 
-I attempted to set Luz Cortez’s password to:
+### 🖼️ Screenshot 23 – Editing Maximum Password Age in Custom GPO
 
-> 🔤 **granitebox**
+I opened the **Custom Password Policy** GPO for editing and navigated to:
 
-The system rejected this password because it did not meet the newly applied password requirements.
+> 📂 **Computer Configuration** ➝ **Policies** ➝ **Windows Settings** ➝ **Security Settings** ➝ **Account Policies** ➝ **Password Policy**
+
+From there, I modified the **Maximum password age** setting to:  
+> 📆 **60 days**
+
+This means users will be required to change their passwords every 60 days to maintain compliance with security standards.
+
+![Screenshot 23: Set Maximum Password Age to 60 Days](23-set-max-password-age.png.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- Enforcing a **maximum password age** ensures that compromised or weak passwords don’t persist indefinitely  
+- This setting is a **core part of many compliance frameworks** like NIST, CMMC, and CIS  
+- It's one of several policy controls used to enforce **secure password hygiene** across the domain
+
+---
+
+📝 Pro Tip:
+- For stronger security, combine this with:
+  - **Minimum password length**
+  - **Password complexity requirements**
+  - **Password history enforcement**
+- Avoid setting the age too short (e.g., 7 or 14 days) — this frustrates users and can lead to insecure behavior like writing passwords down
+
+---
+
+### 🖼️ Screenshot 24 – Setting Minimum Password Length in Custom GPO
+
+Continuing in the **Custom Password Policy** GPO editor, I adjusted the:
+
+> 🔢 **Minimum password length**
+
+to:  
+> 🔒 **12 characters**
+
+This setting enforces that all user passwords must be at least 12 characters long, increasing password strength and resistance to brute-force attacks.
+
+![Screenshot 24: Set Minimum Password Length to 12](24-set-min-password-length.png.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- Longer passwords are significantly harder to guess or crack  
+- Many cybersecurity standards recommend a minimum of 12+ characters for strong security  
+- This complements other password policies like complexity and expiration to create a layered defense
+
+---
+
+🛠️ Pro Tip:
+- Encourage passphrases or combinations of words for better memorability and security  
+- Avoid setting the minimum length too low (like 6 or 8), as these are vulnerable to attack
+
+---
+
+### 🖼️ Screenshot 25 – Linking an Existing GPO to the Domain
+
+In the **Group Policy Management Console**, I navigated to my domain (`cyberlab.local`), right-clicked it, and selected:
+
+> 🔗 **Link an Existing GPO**
+
+This allows me to apply a previously created Group Policy Object (such as the **Custom Password Policy**) to the entire domain or specific organizational units (OUs).
+
+![Screenshot 25: Linking Existing GPO](25-link-existing-gpo.png.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- Linking a GPO is how policies actually get applied to users and computers within the domain  
+- You can link the same GPO to multiple domains, sites, or OUs for flexible policy management  
+- This is a fundamental step in deploying your configured settings across your Active Directory environment
+
+---
+
+📝 Pro Tip:
+- Always double-check which GPOs are linked to your domain and OUs to avoid conflicting policies  
+- Use **Group Policy Modeling** to simulate how linked GPOs will affect specific users or computers before applying changes
+
+---
+
+### 🖼️ Screenshot 26 – Selecting the Custom Password Policy GPO to Link
+
+In the **Link GPO** window, I selected the previously created:
+
+> 🏷️ **Custom Password Policy**
+
+This action attaches the custom policy to the domain, enabling its settings to be applied across all domain-joined devices.
+
+![Screenshot 26: Selecting Custom Password Policy GPO](26-select-custom-password-policy.png.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- Ensures the **customized password rules** are enforced domain-wide  
+- Enables granular policy management separate from the Default Domain Policy  
+- Facilitates easier updates and troubleshooting by isolating settings within dedicated GPOs
+
+---
+
+🛠️ Pro Tip:
+- After linking, confirm the GPO is listed under linked Group Policy Objects for your domain  
+- Use `gpupdate /force` on client machines to immediately apply new policies
 
 ---
 
@@ -606,80 +740,107 @@ The system rejected this password because it did not meet the newly applied pass
 
 ---
 
-### 🖼️ Screenshot 27 – Setting a Compliant Password
+### 🖼️ Screenshot 27 – Adding a New User in Active Directory Users and Computers
 
-![Screenshot 27](27-add-user-luz-cortez.png.png)
+In **Active Directory Users and Computers (ADUC)**, I navigated to the **Users** container within the `cyberlab.local` domain.
 
-I then set a compliant password:
+I right-clicked **Users**, selected **New** ➝ **User**, and began creating a new user account named:
 
-> 🔤 **U5ERp@ssword2025**
+> 👤 **Luz Cortez**
 
-The system accepted this password, and the user was successfully created.
+This user will be part of the domain and can be assigned permissions, group memberships, and policies.
 
----
-
-### 🧠 Why This Step Matters:
-
-- Confirms password policy enforcement is working as intended  
-- Demonstrates secure user onboarding process
-
----
-
-### 🖼️ Screenshot 28 – Viewing User Account Properties
-
-![Screenshot 28](28-set-password-fail.png.png)
-
-I opened the properties for user **Luz Cortez** to review account settings such as:
-
-- Group memberships  
-- Account expiration  
-- Logon hours and workstations restrictions
+![Screenshot 27: Adding New User Luz Cortez](27-add-user-luz-cortez.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- Allows granular control over user permissions and restrictions  
-- Important for enforcing security policies and compliance  
-- Typical task for help desk and sysadmins managing user access
+- Creating user accounts is a foundational task in Active Directory management  
+- Users must exist in the directory to authenticate and access domain resources  
+- Proper user setup allows assignment of roles, security groups, and policy enforcement
 
 ---
 
-### 🖼️ Screenshot 29 – Testing Domain Join on Client Machine
-
-![Screenshot 29](29-password-policy-error.png.png)
-
-On a client computer (e.g., Windows 10/11 VM), I navigated to **System Properties** and joined the domain:
-
-> Domain: `cyberlab.local`
-
-After reboot, the client machine is successfully part of the domain.
+🛠️ Pro Tip:
+- Use meaningful usernames and consistent naming conventions for ease of administration  
+- Always set strong initial passwords and consider enabling **password change at next logon**
 
 ---
 
-### 🧠 Why This Step Matters:
+### 🖼️ Screenshot 28 – Setting a Password That Does Not Meet Policy Requirements
 
-- Validates domain controller functionality  
-- Ensures clients can authenticate and apply Group Policies  
-- Critical step in real-world Active Directory deployment and testing
+While creating the user **Luz Cortez** in **Active Directory Users and Computers**, I reached the password setup screen.
 
----
+I attempted to assign the password:  
+> 🔑 **granitebox**
 
-### 🖼️ Screenshot 30 – Final Verification and Summary
+This password **does not meet the custom password policy requirements** (e.g., minimum length, complexity) that we set earlier.
 
-![Screenshot 30](30-user-created.png.png)
-
-To verify everything, I:
-
-- Confirmed domain users can log in on client machines  
-- Checked Group Policy settings are applied correctly  
-- Ensured password policies are enforced  
-- Verified DNS and Active Directory health via diagnostic tools
+![Screenshot 28: Setting Password Not Meeting Requirements](28-set-password-fail.png.png)
 
 ---
 
 ### 🧠 Why This Step Matters:
 
-- Final validation step before declaring the environment operational  
-- Reflects real-world IT best practices for system deployment and auditing  
-- Demonstrates ability to build and troubleshoot an enterprise-level domain controller setup
+- Demonstrates that **Active Directory enforces password policies in real time**  
+- Helps prevent users from choosing weak or non-compliant passwords  
+- This validation reduces the risk of compromised accounts and strengthens overall security posture
+
+---
+
+🛠️ Pro Tip:
+- If the password is rejected, educate users on the password complexity requirements to encourage stronger credentials  
+- Consider implementing **password complexity notification messages** in your user onboarding process
+
+---
+
+### 🖼️ Screenshot 29 – Password Rejection Popup Due to Policy Violation
+
+After entering the password **granitebox** for user **Luz Cortez**, Active Directory immediately displayed an error popup stating that the password does not meet the domain’s password policy requirements.
+
+This enforcement helps ensure all passwords comply with security standards.
+
+![Screenshot 29: Password Policy Violation Popup](29-password-policy-error.png.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- Shows the **built-in enforcement of password complexity and length policies** in Active Directory  
+- Prevents weak passwords that can be easily guessed or cracked  
+- Acts as an immediate feedback mechanism for users and administrators alike
+
+---
+
+🛠️ Pro Tip:
+- Customize password policy messages where possible to provide clearer guidance  
+- Use this enforcement step as part of **security awareness training** for new users
+
+---
+
+### 🖼️ Screenshot 30 – Successful Password Set and New User Created
+
+After the initial password was rejected, I entered a compliant password for user **Luz Cortez**:
+
+> 🔐 **U5ERp@ssword2025**
+
+This password meets the custom password policy requirements, and the user account was successfully created.
+
+Now, **Luz Cortez** appears listed under the **Users** container in the `cyberlab.local` domain within **Active Directory Users and Computers**.
+
+![Screenshot 30: New User Luz Cortez Created](30-user-created.png.png)
+
+---
+
+### 🧠 Why This Step Matters:
+
+- Confirms that password policies are effectively enforced without blocking valid credentials  
+- Shows the successful creation of a domain user who can now authenticate and access resources  
+- Illustrates the typical user onboarding process in Active Directory environments
+
+---
+
+📝 Pro Tip:
+- Remind users to change their password at first logon for better security hygiene  
+- Consider adding new users to relevant security or distribution groups immediately after creation
