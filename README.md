@@ -18,7 +18,7 @@ Renaming the server to something meaningful helps with identification — especi
 
 ### 🖼️ Screenshot 02 – Initial Server Setup via SConfig
 
-![Screenshot 02](02-initial-server-setup-sconfig.png)
+![Screenshot 02](02-initial-server-setup-menu.png.png)
 
 After the Windows Server 2022 installation completed, I was brought to the **SConfig** (Server Configuration) menu. This command-line utility allows you to configure key server settings before launching the desktop GUI.
 
@@ -42,7 +42,7 @@ This menu simulates how **real-world system administrators** often configure hea
 
 ### 🖼️ Screenshot 03 – Viewing Network Adapter in SConfig
 
-![Screenshot 03](03-view-network-adapter-sconfig.png)
+![Screenshot 03](03-network-settings-initial.png.png)
 
 After selecting option `8` from the SConfig menu, I was shown a list of available network adapters. This screen confirms which network interfaces are installed and currently active.
 
@@ -62,7 +62,7 @@ In this case:
 
 ### 🖼️ Screenshot 04 – Set Static IP and DNS Server (Before Promotion)
 
-![Screenshot 04](04-set-static-ip-dns.png)
+![Screenshot 04](04-set-static-ip-and-dns.png.png)
 
 Once I selected my network adapter (`Index 1`), I was given the following options:
 
@@ -87,7 +87,7 @@ Once I selected my network adapter (`Index 1`), I was given the following option
 
 ### 🖼️ Screenshot 05 – Enabling Remote Desktop Access
 
-![Screenshot 05](05-enable-remote-desktop.png)
+![Screenshot 05](05-enable-remote-desktop.png.png)
 
 Next, I selected option `7` from the SConfig main menu to configure **Remote Desktop**.
 
@@ -111,7 +111,7 @@ I was prompted with the following choices:
 
 ### 🖼️ Screenshot 06 – Selecting Allowed Remote Desktop Clients
 
-![Screenshot 06](06-allowed-remote-desktop-clients.png)
+![Screenshot 06](06-remote-desktop-client-options.png.png)
 
 After choosing to enable Remote Desktop, I was prompted to choose which types of client connections should be allowed:
 
@@ -124,7 +124,7 @@ After choosing to enable Remote Desktop, I was prompted to choose which types of
 
 ### 🖼️ Screenshot 07 – Attempting to Launch GUI with `explorer.exe`
 
-![Screenshot 07](07-explorer-error.png)
+![Screenshot 07](07-explorer-error-no-gui.png.png)
 
 At this point, I attempted to launch the Windows desktop environment using the `explorer` command from the PowerShell/Command Prompt, but received the following error:
 
@@ -155,7 +155,7 @@ This enabled the full GUI, including Server Manager, Active Directory tools, and
 
 ### 🖼️ Screenshot 08 – First Login into the Windows Server 2022 GUI
 
-![Screenshot 08](08-first-login-gui.png)
+![Screenshot 08](08-first-login-gui.png.png)
 
 After reinstalling the operating system and choosing the **Desktop Experience** edition, I successfully booted into the full graphical user interface (GUI) of Windows Server 2022.
 
@@ -183,7 +183,7 @@ If you're running a server in a VM and performance is low, disable **Server Mana
 
 ### 🖼️ Screenshot 09 – Selecting Role-Based or Feature-Based Installation
 
-![Screenshot 09](09-role-based-installation.png)
+![Screenshot 09](09-role-based-installation.png.png)
 
 In Server Manager, I clicked **"Add roles and features"** to begin setting up Active Directory Domain Services (AD DS). This opened the **Add Roles and Features Wizard**.
 
@@ -213,7 +213,7 @@ This is the most common option and is used to install server roles (like AD DS, 
 
 ### 🖼️ Screenshot 10 – Selecting the Active Directory Domain Services (AD DS) Role
 
-![Screenshot 10](10-select-ad-ds-role.png)
+![Screenshot 10](10-select-ad-ds-role.png.png)
 
 On the **Select server roles** screen, I hovered over and selected:
 > ✅ **Active Directory Domain Services**
@@ -245,7 +245,7 @@ After selecting the role, the wizard automatically prompted me to install **depe
 
 ### 🖼️ Screenshot 11 – Adding Required Features for AD DS
 
-![Screenshot 11](11-add-required-features-ad-ds.png)
+![Screenshot 11](11-add-required-ad-ds-features.png.png)
 
 After selecting the **Active Directory Domain Services (AD DS)** role, the wizard prompted me with a pop-up to install required supporting features.
 
@@ -274,7 +274,7 @@ In enterprise environments, you may need to install these tools **remotely** usi
 
 ### 🖼️ Screenshot 12 – Confirming Role and Feature Installation Selections
 
-![Screenshot 12](12-confirm-role-feature-install.png)
+![Screenshot 12](12-confirm-installation-selections.png.png)
 
 At this point, I reviewed all of my configuration choices before starting the installation process. This screen summarizes:
 
@@ -305,7 +305,7 @@ If you're deploying in a real environment:
 
 ### 🖼️ Screenshot 13 – Promoting the Server to a Domain Controller
 
-![Screenshot 13](13-promote-server-domain-controller.png)
+![Screenshot 13](13-promote-to-domain-controller.png.png)
 
 After installing the Active Directory Domain Services (AD DS) role, a yellow notification banner appeared in **Server Manager** with the message:
 
@@ -339,7 +339,7 @@ This launched the **Active Directory Domain Services Configuration Wizard**, whe
 
 ### 🖼️ Screenshot 14 – Creating a New Forest in Active Directory
 
-![Screenshot 14](14-create-new-forest.png)
+![Screenshot 14](14-add-new-forest.png.png)
 
 In the **Active Directory Domain Services Configuration Wizard**, I selected:
 
@@ -373,7 +373,7 @@ This will become the top-level domain for all users, computers, and group polici
 
 ### 🖼️ Screenshot 15 – Reviewing Deployment Options Before Promotion
 
-![Screenshot 15](15-review-deployment-options.png)
+![Screenshot 15](15-review-adds-settings.png.png)
 
 Before promoting the server to a domain controller, I reviewed the deployment options including:
 
@@ -395,7 +395,7 @@ Before promoting the server to a domain controller, I reviewed the deployment op
 
 ### 🖼️ Screenshot 16 – Prerequisites Check for Domain Controller Promotion
 
-![Screenshot 16](16-prerequisites-check.png)
+![Screenshot 16](16-prerequisites-check.png.png)
 
 The wizard runs a **prerequisites check** to validate:
 
@@ -418,7 +418,7 @@ Upon passing all checks, the promotion process can safely proceed.
 
 ### 🖼️ Screenshot 17 – Server Restart After Domain Controller Promotion
 
-![Screenshot 17](17-restart-after-promotion.png)
+![Screenshot 17](17-server-tools-menu.png.png)
 
 After the promotion completed successfully, the server automatically restarted to apply changes.
 
@@ -440,7 +440,7 @@ This reboot finalizes:
 
 ### 🖼️ Screenshot 18 – Accessing DNS Manager Post-Promotion
 
-![Screenshot 18](18-dns-manager-forward-lookup-zones.png)
+![Screenshot 18](18-dns-forward-lookup.png.png)
 
 In Server Manager, I opened **DNS Manager** to view **Forward Lookup Zones**.
 
@@ -458,7 +458,7 @@ The zone for my new domain (`cyberlab.local`) was automatically created during p
 
 ### 🖼️ Screenshot 19 – Navigating to Group Policy Management Editor
 
-![Screenshot 19](19-gpmc-password-policy.png)
+![Screenshot 19](19-gpo-password-policy.png.png)
 
 I launched **Group Policy Management Editor** and navigated to:
 
@@ -479,7 +479,7 @@ Here, I reviewed the current password settings.
 
 ### 🖼️ Screenshot 20 – Creating a New Group Policy Object (GPO)
 
-![Screenshot 20](20-create-new-gpo.png)
+![Screenshot 20](20-create-new-gpo.png.png)
 
 Within **Group Policy Management Console**, I right-clicked **Group Policy Objects** and selected **New** to create a custom GPO.
 
@@ -498,7 +498,7 @@ I named the new GPO:
 
 ### 🖼️ Screenshot 21 – Confirming Link Enabled on Default Domain Policy
 
-![Screenshot 21](21-default-domain-policy-link-enabled.png)
+![Screenshot 21](21-name-custom-password-policy.png.png)
 
 Back in Group Policy Management, I confirmed that the **Default Domain Policy** is linked and enabled for `cyberlab.local`.
 
@@ -513,7 +513,7 @@ Back in Group Policy Management, I confirmed that the **Default Domain Policy** 
 
 ### 🖼️ Screenshot 22 – Editing Maximum Password Age in Custom Password Policy
 
-![Screenshot 22](22-edit-max-password-age.png)
+![Screenshot 22](22-default-domain-policy-linked.png.png)
 
 In the **Custom Password Policy** GPO, I edited the **Maximum password age** setting to:
 
@@ -533,7 +533,7 @@ This setting forces users to change their passwords at least every 60 days.
 
 ### 🖼️ Screenshot 23 – Changing Minimum Password Length
 
-![Screenshot 23](23-edit-min-password-length.png)
+![Screenshot 23](23-set-max-password-age.png.png)
 
 Next, I set the **Minimum password length** to:
 
@@ -552,7 +552,7 @@ This increases password complexity requirements to enhance security.
 
 ### 🖼️ Screenshot 24 – Linking Custom Password Policy to Domain
 
-![Screenshot 24](24-link-gpo-existing.png)
+![Screenshot 24](24-set-min-password-length.png.png)
 
 I right-clicked the domain `cyberlab.local` and selected:
 
@@ -571,7 +571,7 @@ Then chose the **Custom Password Policy** GPO to link it.
 
 ### 🖼️ Screenshot 25 – Creating a New User in Active Directory
 
-![Screenshot 25](25-create-new-user.png)
+![Screenshot 25](25-link-existing-gpo.png.png)
 
 Using **Active Directory Users and Computers**, I added a new user:
 
@@ -589,7 +589,7 @@ Using **Active Directory Users and Computers**, I added a new user:
 
 ### 🖼️ Screenshot 26 – Setting a Password That Fails Policy
 
-![Screenshot 26](26-password-fails-policy.png)
+![Screenshot 26](26-select-custom-password-policy.png.png)
 
 I attempted to set Luz Cortez’s password to:
 
@@ -608,7 +608,7 @@ The system rejected this password because it did not meet the newly applied pass
 
 ### 🖼️ Screenshot 27 – Setting a Compliant Password
 
-![Screenshot 27](27-password-compliant.png)
+![Screenshot 27](27-add-user-luz-cortez.png.png)
 
 I then set a compliant password:
 
@@ -627,7 +627,7 @@ The system accepted this password, and the user was successfully created.
 
 ### 🖼️ Screenshot 28 – Viewing User Account Properties
 
-![Screenshot 28](28-user-account-properties.png)
+![Screenshot 28](28-set-password-fail.png.png)
 
 I opened the properties for user **Luz Cortez** to review account settings such as:
 
@@ -647,7 +647,7 @@ I opened the properties for user **Luz Cortez** to review account settings such 
 
 ### 🖼️ Screenshot 29 – Testing Domain Join on Client Machine
 
-![Screenshot 29](29-joining-client-to-domain.png)
+![Screenshot 29](29-password-policy-error.png.png)
 
 On a client computer (e.g., Windows 10/11 VM), I navigated to **System Properties** and joined the domain:
 
@@ -667,7 +667,7 @@ After reboot, the client machine is successfully part of the domain.
 
 ### 🖼️ Screenshot 30 – Final Verification and Summary
 
-![Screenshot 30](30-final-verification.png)
+![Screenshot 30](30-user-created.png.png)
 
 To verify everything, I:
 
