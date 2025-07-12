@@ -6,7 +6,7 @@ This project documents the process of setting up a Windows Server 2022 virtual m
 
 ### 🖼️ Screenshot 01 – Renaming the Computer
 
-![Screenshot 01](01-rename-computer.png)
+![Screenshot 01](01-rename-computer.png.png)
 
 In this step, I renamed the default computer name (`DC-WINSERVER2022`) to `DC-CYBERLAB` as part of the post-installation configuration.
 
